@@ -1,4 +1,4 @@
-<?php   //ESTO ES LA CLASE DEL COMPONENTE  .A VISTA ESTÁ EN RESOURCES/VIEWS/COMPONENTES/ALERT.BLADE.PHP
+<?php
 
 namespace App\View\Components;
 
@@ -14,18 +14,18 @@ class Alert extends Component
     public $colortext;
     public $colorbg;
 
-    public function __construct($colortext = "red", $colorbg= "orange")
+    public function __construct($colortext = "black", $colorbg="orange")
     {
         $this->colortext = $colortext;
         $this->colorbg = $colorbg;
     }
 
-
     public function peligro(){
-        if($this->colortext=="red"){
-            return "¡¡¡¡¡¡¡¡¡¡Pegrriiilooooossssiiisiiiimooooo!!!!!!";
+        if($this->colortext=="red") {
+            return "¡¡¡¡¡¡¡¡¡PELIGRO!!!!!!!!!!";
         }
     }
+
     /**
      * Get the view / contents that represent the component.
      */
