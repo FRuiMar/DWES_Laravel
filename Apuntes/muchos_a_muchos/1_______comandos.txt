@@ -1,0 +1,16 @@
+php artisan migrate
+php atisan migrate:refresh
+
+php artisan route:list
+
+
+php artisan make:migration create_student_table
+php artisan make:migration create_student_user_table
+
+
+
+
+php artisan make:model Student
+
+
+
