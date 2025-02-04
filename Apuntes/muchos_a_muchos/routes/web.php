@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/profesor', [UserController::class, 'index'])->name('profesor.index');
+Route::get('/profesor/create', [UserController::class, 'create'])->name('profesor.create');
+Route::post('/profesor/create', [UserController::class, 'store'])->name('profesor.store');
 
 
 
