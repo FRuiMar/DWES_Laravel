@@ -52,10 +52,13 @@ class User extends Authenticatable
     }
 
     public function estudiantes()
-    {
+    {           
         return $this->belongsToMany(Student::class)->withPivot('asignatura','nota');
     }
 
+    public function estudiantesUnicos(){
+        return $this->belongsToMany(Student::class)->distinct();
+    }
 
 
 }
