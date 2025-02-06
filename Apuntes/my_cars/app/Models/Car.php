@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Car extends Model
 {
     /** @use HasFactory<\Database\Factories\CarFactory> */
-    use HasFactory;
+    use HasFactory, softDeletes;
+    protected $guarded = [];
 
-    use softDeletes;
+    //Método para obtener el propietario del coche que es sólo uno.
+    public function propietario()
+    {
+        return $this->belongsTo(User::class, 'user_id');  //la clave sería propietario_id.. pero tenemos user_id (lo hemos hecho así por probar), 
+        //así que aquí que hemos creado el metodo propietario en vez de user.. ponemos al lado de class 'user_id'.
+    }
 }

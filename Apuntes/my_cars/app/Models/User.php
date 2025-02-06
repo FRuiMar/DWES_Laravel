@@ -48,4 +48,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // UN usuario tiene muchos coches
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
+
 }
