@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use App\Models\User;
 
 class CarController extends Controller
 {
@@ -13,6 +16,8 @@ class CarController extends Controller
      */
     public function index()
     {
+        $user = User::find(Auth::id());
+        $mycars = $user->cars()->orderBy('matricula')->get();
         return view('cars.index');
     }
 
@@ -29,8 +34,8 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validatge([
-            'matricula' => 'required|unique:cars,matricula',
+        $request->validate([
+            'matricula' => 'required|unique:cars,matricula, NULL, id, deleted_at, NULL',
             'marca' => 'required',
             'modelo' => 'required',
             'year' => 'required|integer',
@@ -41,22 +46,32 @@ class CarController extends Controller
         ]);
 
 
+        try {
+            $newcar = new Car();
+            $newcar->matricula = $request->matricula;
+            $newcar->marca = $request->marca;
+            $newcar->modelo = $request->modelo;
+            $newcar->year = $request->year;
+            $newcar->color = $request->color;
+            $newcar->fecha = $request->fecha;
+            $newcar->precio = $request->precio;
 
-        $newcar = new Car();
-        $newcar->matricula = $request->matricula;
-        $newcar->marca = $request->marca;
-        $newcar->modelo = $request->modelo;
-        $newcar->year = $request->year;
-        $newcar->color = $request->color;
-        $newcar->fecha = $request->fecha;
-        $newcar->precio = $request->precio;
+            $newcar->user_id = Auth::id();
 
-        $newcar->user_id = Auth::id();
+            $nombrefoto = time() . "-" . $request->file('foto')->getClientOriginalName();
+            $newcar->foto = $nombrefoto;
 
-        $nombrefoto = time() . "-" . $request->file('foto')->getClientOriginalName();
-        $newcar->foto = $nombrefoto;
+            $newcar->save();
 
-        $newcar->save();
+            $request->file('foto')->storeAs('img_cars', $nombrefoto);
+            //storeAs('public/img_cars', $nombrefoto);
+            //crea una carpeta public.. pero dentro de private.. hay que cambiarlo en flisystems.php en la carpeta config. en en el env.
+
+            return to_route('cars.index')->with('msg', 'Coche añadido correctamente');
+
+        } catch (QueryException $qe) {
+            return to_route('cars.index')->with('msg', 'Error al añadir el coche. Intentelo más tarde');
+        }
 
     }
 
