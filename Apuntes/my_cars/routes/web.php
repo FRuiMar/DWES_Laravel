@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //Rutas para el CRUD de coches
-Route::resource('cars', CarController::class)->middleware('auth');
+Route::resource('cars', CarController::class)->middleware(['auth', 'verified']);
 
 
 require __DIR__ . '/auth.php';

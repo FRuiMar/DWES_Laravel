@@ -68,11 +68,9 @@ class CarController extends Controller
             //crea una carpeta public.. pero dentro de private.. hay que cambiarlo en flisystems.php en la carpeta config. en en el env.
 
             return to_route('cars.index')->with('msg', 'Coche añadido correctamente');
-
         } catch (QueryException $qe) {
             return to_route('cars.index')->with('msg', 'Error al añadir el coche. Intentelo más tarde');
         }
-
     }
 
     /**
@@ -80,15 +78,21 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+        // return view('cars.show', ['car' => $car->id]);
+        return view('cars.show')->with('mycar', $car);
     }
+    // public function show($id)
+    // {
+    //     return view('cars.show')->with('mycar',$car);
+    // }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Car $car)
     {
-        //
+        return view('cars.edit')->with('mycar', $car);
     }
 
     /**
@@ -104,6 +108,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //
+        $car->delete();
+        return to_route('cars.index')->with('msg', 'Coche eliminado correctamente');
     }
 }
