@@ -25,7 +25,13 @@ class APICarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $car = Car::create(request()->all());
+        return response()->json([
+            'status' => true,
+            'msg' => 'Coche creado correctamente',
+            //'car' => $car
+        ], 201); //el número 201 es el código de respuesta que significa que se ha creado un recurso
+
     }
 
     /**
@@ -46,7 +52,14 @@ class APICarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $car = Car::find($id); //primero lo busco
+        $car->update(request()->all()); //ahora lo sobre escribo con los datos nuevos. /actualizo/update
+        return response()->json([
+            'status' => true,
+            'msg' => 'Coche actualizado correctamente',
+            //'car' => $car
+        ], 200); //el número 200 es el código de respuesta que significa que todo ha ido bien
+
     }
 
     /**
@@ -54,6 +67,13 @@ class APICarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $car = Car::find($id); //primero lo busco
+        $car->delete(); //ahora lo sobre escribo con los datos nuevos. /actualizo/update
+        return response()->json([
+            'status' => true,
+            'msg' => 'Coche borrado correctamente',
+            //'car' => $car
+        ], 200); //el número 200 es el código de respuesta que significa que todo ha ido bien
+
     }
 }

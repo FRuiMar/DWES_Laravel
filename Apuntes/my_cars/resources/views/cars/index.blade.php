@@ -28,4 +28,17 @@
             </div>
         </div>
     </div>
+
+    <!-- Llamada al componente de LiveWire CarList -->
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    @livewire('car-list', ['nombre' => Auth::user()->name])
+                    <!-- Esto llama a que se muestre la vista, pero primero pasa por la clase del componente CarList.php en app/http/livewire/carlist.php -->
+
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
