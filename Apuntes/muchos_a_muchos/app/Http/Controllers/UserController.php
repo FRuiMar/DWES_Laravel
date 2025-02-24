@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return "profesor.index";
+        $profesor = User::find(Auth::id());
+        $alumnos = $profesor->estudiantes->paginate(1);  //devuelve todos los alumnos que tiene el profesor logueado.(en paginas con 1 alumno en cada una)
+        //si quieres sólo estudiantes con condiciones pones:
+        //$alumnos = $profesor->estudiantes()->where('nota', '>', 5)->get(); //devuelve los alumnos con nota mayor a 5.
+        //$alumnos = $profesor->estudiantes()->wherePivot('nota', '>', 5)->paginate(2); //devuelve los alumnos con nota mayor a 5 pero paginado con dos alumnos en cada página.
+        return view('profesor.index')->with('alumnos', $alumnos); //se le pasa a la vista la variable alumnos con with.
     }
 
 
@@ -43,4 +49,22 @@ class UserController extends Controller
 
         return to_route('profesor.index');
     }
+
+    public function nota(){
+        $profesor=User::find(Auth::id());
+        $alumnos = $profesor->estudiantes; //devuelve todos los alumnos que tiene el profesor logueado. //IMPORTANTE****  devuelve repetido el estudiante, ya que el id es diferente 
+        return view('profesor.nota')->with('alumnos', $alumnos); //esto sirve para devolver a la vista profesor.nota la variable alumnos.
+    }
+
+    public function putnota(Request $request){
+        // $alumno = Student::find($request->alumnoid);  //el request es de los name del formulario en nota.blade.php. por eso es alumnoid.
+        // $alumno -> profesores()->attach(Auth::id(),['asignatura'=>$request->asig, 'nota'=>$request->nota]); //el attach es para añadir a la tabla pivote.
+        
+        $profesor = User::find(Auth::id());
+        $profesor->estudiantes()->attach($request->alumnoid, ['asignatura' => $request->asig, 'nota' => $request->nota]);
+
+        return to_route('profesor.index');
+
+    }
+
 }

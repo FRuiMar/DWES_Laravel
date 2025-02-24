@@ -27,10 +27,10 @@
 
         <!-- Dirección -->
         <div>
-            <x-input-label for="dirección" :value="__('Direccion')" />
-            <x-text-input id="dirección" class="block mt-1 w-full" type="text" name="dirección" :value="old('dirección')"
-                required autofocus autocomplete="dirección" />
-            <x-input-error :messages="$errors->get('dirección')" class="mt-2" />
+            <x-input-label for="direccion" :value="__('direccion')" />
+            <x-text-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" :value="old('direccion')"
+                required autofocus autocomplete="direccion" />
+            <x-input-error :messages="$errors->get('direccion')" class="mt-2" />
         </div>
 
 
