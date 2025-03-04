@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('dni')->unique(); // Columna DNI (única)
-            $table->string('name'); // Nombre (puede incluir nombre y apellido)
-            $table->string('email')->unique(); // Email (único)
-            $table->string('password'); // Contraseña
+            $table->string('dni', 10)->unique();
+            $table->string('name', 50);
+            $table->string('email', 50)->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->enum('role', ['NORMAL', 'ADMIN'])->default('NORMAL'); // Rol (enum)
             $table->string('image')->nullable(); // Imagen (puede ser nula)
             $table->foreignId('membership_id')->nullable()->constrained('memberships')->onDelete('set null'); // Relación con membresías
