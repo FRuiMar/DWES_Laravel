@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('activities', ActivityController::class);
     Route::resource('trainers', TrainerController::class);
     Route::resource('memberships', MembershipController::class);
+
+    // Ruta para mostrar las reservas del usuario
+    Route::get('/mis-reservas', [UserController::class, 'myReservations'])->name('user.reservations');
+    Route::delete('/mis-reservas/{activity}', [UserController::class, 'cancelReservation'])
+        ->name('user.reservations.cancel');
 });
 
 require __DIR__ . '/auth.php';

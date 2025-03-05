@@ -27,13 +27,7 @@
                     <x-nav-link :href="route('activities.index')" :active="request()->routeIs('activities.*')">
                         {{ __('Actividades') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('my-memberships.index')" :active="request()->routeIs('my-memberships.*')">
-                        {{ __('Mis Membresías') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('available-activities.index')" :active="request()->routeIs('available-activities.*')">
-                        {{ __('Actividades Disponibles') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.*')">
+                    <x-nav-link :href="route('user.reservations')" :active="request()->routeIs('user.reservations')">
                         {{ __('Mis Reservas') }}
                     </x-nav-link>
                 </div>
@@ -111,15 +105,10 @@
             <x-responsive-nav-link :href="route('activities.index')" :active="request()->routeIs('activities.*')">
                 {{ __('Actividades') }}
             </x-responsive-nav-link>
-            <x-nav-link :href="route('my-memberships.index')" :active="request()->routeIs('my-memberships.*')">
-                {{ __('Mis Membresías') }}
-            </x-nav-link>
-            <x-nav-link :href="route('available-activities.index')" :active="request()->routeIs('available-activities.*')">
-                {{ __('Actividades Disponibles') }}
-            </x-nav-link>
-            <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.*')">
+
+            <x-responsive-nav-link :href="route('user.reservations')" :active="request()->routeIs('user.reservations')">
                 {{ __('Mis Reservas') }}
-            </x-nav-link>
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

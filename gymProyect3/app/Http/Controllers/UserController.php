@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -179,20 +180,32 @@ class UserController extends Controller
         }
     }
 
+
     public function myReservations()
     {
-        // Obtiene el usuario autenticado
+        // Obtiene el usuario autenticado con sus actividades cargadas
+        $user = User::with(['activities.trainer'])->find(Auth::id());
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $reservations = $user->activities;
+
+        return view('users.reservation', compact('reservations'));
+    }
+
+
+    // Añadir después del método myReservations
+
+    public function cancelReservation($activityId)
+    {
         $user = Auth::user();
 
-        // Debug para ver el contenido del usuario
-        //dd($user);  // Esto mostrará el objeto completo del usuario
+        // Detach elimina la relación en la tabla pivote
+        $user->activities()->detach($activityId);
 
-        // Obtiene todas sus actividades con fecha de reserva
-        $reservations = $user->activities()
-            ->withPivot('reservation_date')
-            ->orderBy('reservation_date', 'desc')  // Ordenadas por fecha (más recientes primero)
-            ->get();
-
-        return view('user.reservations', compact('reservations'));
+        return redirect()->route('user.reservations')
+            ->with('success', 'Reserva cancelada correctamente.');
     }
 }
