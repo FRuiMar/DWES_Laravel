@@ -32,15 +32,31 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('users', UserController::class);
-    Route::resource('activities', ActivityController::class);
-    Route::resource('trainers', TrainerController::class);
-    Route::resource('memberships', MembershipController::class);
 
-    // Ruta para mostrar las reservas del usuario
+    Route::resource('activities', ActivityController::class);
+
+    Route::resource('memberships', MembershipController::class);
+});
+
+
+Route::middleware(['auth', 'isUser'])->group(function () {
     Route::get('/mis-reservas', [UserController::class, 'myReservations'])->name('user.reservations');
-    Route::delete('/mis-reservas/{activity}', [UserController::class, 'cancelReservation'])
+    Route::delete('/mis-reservas/cancel/{reservationId}', [UserController::class, 'cancelReservation'])
         ->name('user.reservations.cancel');
+});
+
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+
+    Route::resource('users', UserController::class);
+    Route::resource('trainers', TrainerController::class);
+
+    // Vista para gestionar todas las reservas (solo admin)
+    Route::get('/admin/reservations', [UserController::class, 'adminReservations'])
+        ->name('user.admin.reservations');
+
+    // Cancelar una reserva específica (solo admin)
+    Route::delete('/admin/reservations/{reservationId}', [UserController::class, 'adminCancelReservation'])
+        ->name('user.admin.reservations.cancel');
 });
 
 require __DIR__ . '/auth.php';

@@ -1,3 +1,4 @@
+{{-- filepath: /c:/xampp/htdocs/DWES_Laravel/gymProyect3/resources/views/layouts/navigation.blade.php --}}
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,21 +16,28 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
-                        {{ __('Usuarios') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('memberships.index')" :active="request()->routeIs('memberships.*')">
-                        {{ __('Membresías') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('trainers.index')" :active="request()->routeIs('trainers.*')">
-                        {{ __('Entrenadores') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('activities.index')" :active="request()->routeIs('activities.*')">
-                        {{ __('Actividades') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('user.reservations')" :active="request()->routeIs('user.reservations')">
-                        {{ __('Mis Reservas') }}
-                    </x-nav-link>
+
+                    @if (Auth::user()->role === 'ADMIN')
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('memberships.index')" :active="request()->routeIs('memberships.*')">
+                            {{ __('Membresías') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('trainers.index')" :active="request()->routeIs('trainers.*')">
+                            {{ __('Entrenadores') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('activities.index')" :active="request()->routeIs('activities.*')">
+                            {{ __('Actividades') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('user.admin.reservations')" :active="request()->routeIs('user.admin.reservations')">
+                            {{ __('Gestionar Reservas') }}
+                        </x-nav-link>
+                    @elseif(Auth::user()->role === 'NORMAL')
+                        <x-nav-link :href="route('user.reservations')" :active="request()->routeIs('user.reservations')">
+                            {{ __('Mis Reservas') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -93,22 +101,25 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
-                {{ __('Usuarios') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('memberships.index')" :active="request()->routeIs('memberships.*')">
-                {{ __('Membresías') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('trainers.index')" :active="request()->routeIs('trainers.*')">
-                {{ __('Entrenadores') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('activities.index')" :active="request()->routeIs('activities.*')">
-                {{ __('Actividades') }}
-            </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('user.reservations')" :active="request()->routeIs('user.reservations')">
-                {{ __('Mis Reservas') }}
-            </x-responsive-nav-link>
+            @if (Auth::user()->role === 'ADMIN')
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                    {{ __('Usuarios') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('memberships.index')" :active="request()->routeIs('memberships.*')">
+                    {{ __('Membresías') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('trainers.index')" :active="request()->routeIs('trainers.*')">
+                    {{ __('Entrenadores') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('activities.index')" :active="request()->routeIs('activities.*')">
+                    {{ __('Actividades') }}
+                </x-responsive-nav-link>
+            @elseif(Auth::user()->role === 'NORMAL')
+                <x-responsive-nav-link :href="route('user.reservations')" :active="request()->routeIs('user.reservations')">
+                    {{ __('Mis Reservas') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

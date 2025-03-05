@@ -20,6 +20,15 @@ class ActivityController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function index2()
+    {
+        $activities = Activity::with('trainer')->get();
+        return view('activities.index2', compact('activities'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()

@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AdminMW
 {
@@ -21,6 +23,7 @@ class AdminMW
             return $next($request);
         }
 
-        return redirect('dashboard')->with('error', 'No tienes permiso para acceder a esta página.');
+        //return Redirect::route('dashboard')->with('error', 'No tienes permiso para acceder a esta página.');
+        throw new AuthorizationException('No tienes permiso para acceder a esta página.');
     }
 }

@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Membership;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Activity;
 use Illuminate\Support\Facades\DB;
+
+
 
 
 class UserController extends Controller
@@ -181,31 +181,129 @@ class UserController extends Controller
     }
 
 
+
+
     public function myReservations()
     {
         // Obtiene el usuario autenticado con sus actividades cargadas
-        $user = User::with(['activities.trainer'])->find(Auth::id());
+
+        //ORIGINAL
+        //$user = User::with(['activities.trainer'])->find(Auth::id());
+
+        //AÑADO ESTO.. PARA PROBAR.
+        $user = User::with(['activities' => function ($query) {
+            $query->withPivot('id', 'reservation_date'); // Cargar los datos de la tabla pivote
+        }, 'activities.trainer'])->find(Auth::id());
+
 
         if (!$user) {
             return redirect()->route('login');
         }
 
+        // Asegúrate de que cada reserva tenga los datos pivot
         $reservations = $user->activities;
+
+        // Agregamos esto para depuración
+        foreach ($reservations as $reservation) {
+            Log::info('Reservation: activity_id=' . $reservation->id . ', pivot_id=' . ($reservation->pivot->id ?? 'null'));
+        }
 
         return view('users.reservation', compact('reservations'));
     }
 
 
-    // Añadir después del método myReservations
 
-    public function cancelReservation($activityId)
+    public function cancelReservation($reservationId)
     {
-        $user = Auth::user();
+        // Verificar si el usuario está autenticado
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
 
-        // Detach elimina la relación en la tabla pivote
-        $user->activities()->detach($activityId);
+        // Encontrar la reserva en la tabla pivot
+        $reservation = DB::table('activity_user')
+            ->where('id', $reservationId)
+            ->where('user_id', Auth::id()) // Para seguridad, asegurarse de que la reserva pertenece al usuario
+            ->first();
+
+        if (!$reservation) {
+            return redirect()->route('user.reservations')
+                ->with('error', 'La reserva no existe o no tienes permiso para cancelarla.');
+        }
+
+        // Encontrar la información de la actividad para mostrarla en el mensaje de éxito
+        $activity = Activity::find($reservation->activity_id);
+        $activityName = $activity ? $activity->name : 'la actividad';
+
+        // Eliminar la reserva
+        DB::table('activity_user')
+            ->where('id', $reservationId)
+            ->delete();
 
         return redirect()->route('user.reservations')
-            ->with('success', 'Reserva cancelada correctamente.');
+            ->with('success', "Reserva para {$activityName} cancelada correctamente.");
+    }
+
+
+
+    public function adminReservations()
+    {
+        // Obtener todas las reservas a través de la relación entre User y Activity
+        $users = User::with(['activities' => function ($query) {
+            $query->withPivot('id', 'reservation_date');
+            $query->with('trainer'); // Cargar el entrenador de cada actividad
+        }])->get();
+
+        $reservations = collect();
+
+        foreach ($users as $user) {
+            foreach ($user->activities as $activity) {
+                $reservations->push((object)[
+                    'reservation_id' => $activity->pivot->id,
+                    'reservation_date' => $activity->pivot->reservation_date,
+                    'activity_name' => $activity->name,
+                    'schedule' => $activity->schedule,
+                    'user_name' => $user->name,
+                    'user_email' => $user->email,
+                    'trainer_first_name' => optional($activity->trainer)->first_name,
+                    'trainer_last_name' => optional($activity->trainer)->last_name,
+                    'user_id' => $user->id
+                ]);
+            }
+        }
+
+        // Ordenar por fecha de reserva
+        $reservations = $reservations->sortBy('reservation_date');
+
+        return view('users.adminReservation', compact('reservations'));
+    }
+
+
+    public function adminCancelReservation($reservationId)
+    {
+        // Encontrar la reserva en la tabla pivot
+        $reservation = DB::table('activity_user')
+            ->where('id', $reservationId)
+            ->first();
+
+        if (!$reservation) {
+            return redirect()->route('user.admin.reservations')
+                ->with('error', 'La reserva no existe.');
+        }
+
+        // Encontrar la información de la actividad y del usuario
+        $activity = Activity::find($reservation->activity_id);
+        $user = User::find($reservation->user_id);
+
+        $activityName = $activity ? $activity->name : 'la actividad';
+        $userName = $user ? $user->name : 'el usuario';
+
+        // Eliminar la reserva
+        DB::table('activity_user')
+            ->where('id', $reservationId)
+            ->delete();
+
+        return redirect()->route('user.admin.reservations')
+            ->with('success', "Reserva de {$activityName} para {$userName} cancelada correctamente.");
     }
 }

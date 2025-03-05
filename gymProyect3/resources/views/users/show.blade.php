@@ -84,8 +84,9 @@
                             </form>
                         </div>
 
-                        <!-- Botón volver separado a la derecha -->
-                        <a href="{{ route('users.index') }}"
+
+                        {{-- <a href="{{ route('users.index') }}" --}}
+                        <a href="{{ url()->previous() }}"
                             class="inline-block px-6 py-2 bg-gray-500 text-white font-medium text-center rounded-md hover:bg-gray-600 transition">
                             Volver
                         </a>
