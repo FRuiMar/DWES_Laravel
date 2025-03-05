@@ -4,10 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-use App\Http\Controllers\UserController; // Añade esta importación
-use App\Http\Controllers\ActivityController; // Añade esta importación
-use App\Http\Controllers\TrainerController; // Añade esta importación
-use App\Http\Controllers\MembershipController; // Añade esta importación
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\PdfController;
+
 
 
 
@@ -24,6 +26,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
 
 
 
@@ -48,6 +54,8 @@ Route::middleware(['auth', 'isUser'])->group(function () {
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::resource('users', UserController::class);
+    // Ruta para generar PDF de usuarios
+    Route::get('/pdf/users', [PdfController::class, 'generateUsersPdf'])->name('pdf.users');
     Route::resource('trainers', TrainerController::class);
 
     // Vista para gestionar todas las reservas (solo admin)

@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-white leading-tight">
-                @if (Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'ADMIN')
                     Admin Area
                 @else
                     User Area
