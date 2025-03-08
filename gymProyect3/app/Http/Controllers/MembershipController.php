@@ -146,4 +146,17 @@ class MembershipController extends Controller
             return back()->with('error', 'Ha ocurrido un error al eliminar la membresía.');
         }
     }
+
+
+
+    public function indexUser()
+    {
+        // Obtener todas las membresías ordenadas por precio
+        $memberships = Membership::orderBy('price')->get();
+
+        // return view('memberships.index2', compact('memberships'));
+
+        $memberships = Membership::withCount('users')->get();
+        return view('memberships.indexUser', compact('memberships'));
+    }
 }

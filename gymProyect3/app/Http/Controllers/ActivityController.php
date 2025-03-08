@@ -19,13 +19,21 @@ class ActivityController extends Controller
         return view('activities.index', compact('activities'));
     }
 
+    public function cardsUser()
+    {
+        $activities = Activity::with('trainer')->get();
+        return view('activities.cardsUser', compact('activities'));
+    }
+
+
+
     /**
      * Display a listing of the resource.
      */
-    public function index2()
+    public function cards()
     {
         $activities = Activity::with('trainer')->get();
-        return view('activities.index2', compact('activities'));
+        return view('activities.cards', compact('activities'));
     }
 
     /**
@@ -162,5 +170,12 @@ class ActivityController extends Controller
             Log::error('Error al eliminar actividad: ' . $e->getMessage());
             return back()->with('error', 'Ha ocurrido un error al eliminar la actividad.');
         }
+    }
+
+
+    public function welcome()
+    {
+        $activities = Activity::with('trainer')->get();
+        return view('welcome', compact('activities'));
     }
 }

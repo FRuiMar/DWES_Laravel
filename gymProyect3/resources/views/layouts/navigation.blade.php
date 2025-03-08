@@ -37,6 +37,12 @@
                         <x-nav-link :href="route('user.reservations')" :active="request()->routeIs('user.reservations')">
                             {{ __('Mis Reservas') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('activities.user-cards')">
+                            {{ __('Ver Actividades') }}
+                        </x-nav-link>
+                        {{-- <x-nav-link :href="route('memberships.available')" :active="request()->routeIs('memberships.available')">
+                            {{ __('Membresíass') }}
+                        </x-nav-link> --}}
                     @endif
                 </div>
             </div>
