@@ -1,4 +1,4 @@
-<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+<div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg"> <!-- Cambiamos el fondo a gris claro -->
     <div class="p-6">
         @if ($activity->image)
             <img src="{{ asset('storage/' . $activity->image) }}" alt="{{ $activity->name }}"
@@ -15,7 +15,7 @@
 
         @if ($activity->trainer)
             <p class="mt-2 text-sm text-gray-600">
-                <strong>Entrenador:</strong> {{ $activity->trainer->name }}
+                <strong>Entrenador:</strong> {{ $activity->trainer->first_name }} {{ $activity->trainer->last_name }}
             </p>
         @endif
 

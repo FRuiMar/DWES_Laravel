@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Forza Training Center</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -59,49 +59,35 @@
     </header>
 
     <!-- Contenido principal -->
-    <main class="flex-grow flex items-center justify-center">
-        <div class="text-center p-8 bg-black bg-opacity-50 rounded-lg">
-            <h1 class="text-5xl font-bold text-white mb-4">Forza Training Center</h1>
-            <p class="text-2xl text-white">¡Bienvenidos!</p>
+    <main class="flex-grow">
+        <!-- Sección de Bienvenida -->
+        <div class="flex items-center justify-center h-96">
+            <div class="text-center p-8 bg-black bg-opacity-50 rounded-lg shadow-2xl">
+                <h1 class="text-5xl font-bold text-white mb-4">Forza Training Center</h1>
+                <p class="text-2xl text-white">¡Bienvenidos!</p>
+            </div>
         </div>
-        <div class="py-12">
+
+        <!-- Sección de Actividades -->
+        <div class="bg-white bg-opacity-75 py-12"> <!-- Ajustamos la opacidad del fondo blanco -->
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">Nuestras Actividades</h2>
+                <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Nuestras Actividades</h2>
 
                 <!-- Componente de tarjetas de actividades -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"> <!-- Cambiamos a 4 columnas -->
                     @if (isset($activities))
-
-                        {{-- Revisar. luego borrar --}}
-                        <div class="col-span-3 p-4 mb-4 bg-blue-100 rounded">
-                            <p>{{ count($activities) }} actividades encontradas.</p>
-                        </div>
-
                         @foreach ($activities as $activity)
                             <x-activity-card :activity="$activity" :showReservationButton="true" />
                         @endforeach
                     @else
-                        <div class="col-span-3 text-center">
+                        <div class="col-span-4 text-center"> <!-- Ajustamos el colspan para 4 columnas -->
                             <p class="text-red-500 bg-white p-4 rounded shadow">No hay actividades disponibles en este
                                 momento.</p>
                         </div>
                     @endif
                 </div>
-
-
-
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
     </main>
 </body>
 
