@@ -9,6 +9,7 @@ use App\Models\Activity;
 use App\Models\Membership;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
