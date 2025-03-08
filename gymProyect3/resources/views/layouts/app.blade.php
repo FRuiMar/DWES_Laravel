@@ -17,7 +17,9 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen"
+        style="background-image: url('{{ asset('storage/fondos/Fondo3.jpg') }}'); background-size: cover; background-attachment: fixed; background-position: center;">
+        {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900"> --}}
         @include('layouts.navigation')
 
         <!-- Page Heading -->
