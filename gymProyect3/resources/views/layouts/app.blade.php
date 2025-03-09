@@ -14,6 +14,9 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Livewire Styles -->
+    @livewireStyles
 </head>
 
 <body class="font-sans antialiased">
@@ -56,6 +59,12 @@
             {{ $slot }}
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Livewire Scripts -->
+    @livewireScripts
 </body>
 
 </html>

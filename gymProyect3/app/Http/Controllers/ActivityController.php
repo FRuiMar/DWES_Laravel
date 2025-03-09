@@ -7,6 +7,7 @@ use App\Models\Trainer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
@@ -175,6 +176,10 @@ class ActivityController extends Controller
 
     public function welcome()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         $activities = Activity::with('trainer')->get();
         return view('welcome', compact('activities'));
     }

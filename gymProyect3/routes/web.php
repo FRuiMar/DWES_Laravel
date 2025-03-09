@@ -64,9 +64,7 @@ Route::middleware('auth')->group(function () {
 
         // Ruta para crear reservas
         Route::post('/reservations', [ReservationController::class, 'store'])
-            ->name('reservations.store');
-
-        Route::resource('memberships', MembershipController::class);
+            ->name('reservations.store');;
 
         Route::get('/mis-reservas', [UserController::class, 'myReservations'])->name('user.reservations');
         Route::delete('/mis-reservas/cancel/{reservationId}', [UserController::class, 'cancelReservation'])
@@ -101,6 +99,8 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('/admin/reservations/{reservationId}', [UserController::class, 'adminCancelReservation'])
             ->name('user.admin.reservations.cancel');
+
+        Route::resource('memberships', MembershipController::class);
     });
 });
 

@@ -14,8 +14,13 @@ class TrainerController extends Controller
      */
     public function index()
     {
-        $trainers = Trainer::all();
-        return view('trainers.index', compact('trainers'));
+
+        // Código de blade antiguo
+        // $trainers = Trainer::all();
+        // return view('trainers.index', compact('trainers'));
+
+        // Código para Livewire
+        return view('trainers.index');
     }
 
     /**

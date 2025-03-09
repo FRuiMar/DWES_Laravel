@@ -27,7 +27,7 @@
                                     <div
                                         class="relative w-40 h-40 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-lg mx-auto">
                                         <img id="preview-image" class="w-full h-full object-cover"
-                                            src="{{ asset('storage/placeholder/activity-placeholder.png') }}"
+                                            src="{{ asset('storage/placeholder/image-placeholder.jpg') }}"
                                             alt="Imagen de actividad">
                                         <div
                                             class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200">
