@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Laravel\Sanctum\HasApiTokens;
 use App\Models\Activity;
 use App\Models\Membership;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,7 +14,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     // Campos que se pueden asignar masivamente
     protected $fillable = [
