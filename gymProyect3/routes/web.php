@@ -10,8 +10,7 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ReservationController;
-use App\Models\Activity;
-use Illuminate\Support\Facades\Log;
+
 
 
 
