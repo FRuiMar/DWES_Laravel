@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div
-        class="w-full sm:max-w-lg mt-6 px-8 py-6 bg-white bg-opacity-30 border-2 border-red-500 shadow-md overflow-hidden sm:rounded-lg">
+        class="w-full sm:max-w-lg mt-6 px-8 py-6 bg-gray-600 bg-opacity-80 border-2 border-red-500 shadow-md overflow-hidden sm:rounded-lg">
 
         <!-- Cabecera con logo -->
         <div class="mb-6 text-center">

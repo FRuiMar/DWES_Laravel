@@ -8,9 +8,14 @@
     <div class="py-8">
         <!-- Cambiar max-w-screen-xl a max-w-screen-2xl o max-w-full para más ancho -->
         <div class="max-w-[90%] mx-auto px-4"> <!-- Aumentado el ancho máximo y simplificado el padding -->
-            <div class="bg-white dark:bg-gray-800 bg-opacity-75 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white bg-opacity-65 overflow-hidden shadow-sm sm:rounded-lg">
+                <!-- Fondo blanco con opacidad 65% -->
                 <div class="p-4 text-gray-900 dark:text-gray-100">
-                    <h2 class="text-3xl font-bold text-center mb-6">Nuestras Actividades</h2>
+
+                    <h2 class="text-3xl font-bold text-center mb-4">
+                        <span class="text-red-500">Nuestras</span> <span class="text-black">Actividades</span>
+                    </h2>
+                    <!-- Texto en negro -->
 
                     <!-- Manteniendo 4 columnas pero con más espacio -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 
 
@@ -80,9 +81,18 @@ class ReservationController extends Controller
             ]);
 
             return redirect()->back()->with('success', 'Te has inscrito correctamente en la actividad.');
+        } catch (QueryException $e) {
+            Log::error('Error SQL al reservar: ' . $e->getMessage());
+            $errorCode = $e->errorInfo[1] ?? null;
+
+            if ($errorCode == 1062) { // Duplicate entry
+                return redirect()->back()->with('warning', 'Ya estás inscrito en esta actividad.');
+            }
+
+            return redirect()->back()->with('error', 'Error en la base de datos al procesar tu reserva.');
         } catch (\Exception $e) {
             Log::error('Error al reservar: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Ha ocurrido un error al procesar tu reserva: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ha ocurrido un error al procesar tu reserva.');
         }
     }
 

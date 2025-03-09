@@ -3,7 +3,7 @@
     {{-- <div
         class="w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-600 bg-opacity-70 border-2 border-red-500 shadow-md overflow-hidden sm:rounded-lg"> --}}
     <div
-        class="w-full sm:max-w-3xl mt-6 px-8 py-6 bg-white bg-opacity-30 border-2 border-red-500 shadow-md overflow-hidden sm:rounded-lg">
+        class="w-full sm:max-w-3xl mt-6 px-8 py-6 bg-gray-600 bg-opacity-80 border-2 border-red-500 shadow-md overflow-hidden sm:rounded-lg">
         <!-- Cabecera con título -->
         <div class="mb-6 text-center">
             <h2 class="mt-3 text-3xl font-bold">

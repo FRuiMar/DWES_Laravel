@@ -70,7 +70,7 @@
         </div>
 
         <!-- Sección de Actividades - Reducido padding vertical para evitar scroll -->
-        <div class="bg-white bg-opacity-75 py-6"> <!-- Reducido de py-8 a py-6 -->
+        <div class="bg-white bg-opacity-60 py-6"> <!-- Reducido de py-8 a py-6 -->
             <div class="max-w-[90%] mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-4">
                     <span class="text-red-500">Nuestras</span> Actividades

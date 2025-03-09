@@ -9,7 +9,7 @@
             </div>
         @endif
 
-        <h3 class="text-lg font-bold">{{ $activity->name }}</h3>
+        <h3 class="text-lg text-gray-800 font-bold">{{ $activity->name }}</h3>
         <p class="mt-2 text-sm text-gray-600"><strong>Horario:</strong> {{ $activity->schedule }}</p>
         <p class="text-sm text-gray-600"><strong>Capacidad:</strong> {{ $activity->max_capacity }} personas</p>
 

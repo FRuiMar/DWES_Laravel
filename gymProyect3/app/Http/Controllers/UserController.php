@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Activity;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 
 
 
@@ -39,20 +41,12 @@ class UserController extends Controller
     }
 
     // Guardar un nuevo usuario
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         try {
-            $validated = $request->validate([
-                'dni' => 'required|string|unique:users,dni',
-                'name' => 'required|string',
-                'email' => 'required|string|email|unique:users,email',
-                'password' => 'required|string|min:5|confirmed',
-                'role' => 'required|string|in:ADMIN,NORMAL',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'membership_id' => 'nullable|exists:memberships,id'
-            ]);
 
-            // Manejar la subida de imagen si existe
+            $validated = $request->validated();
+
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('users', 'public');
                 $validated['image'] = $path;
@@ -95,18 +89,10 @@ class UserController extends Controller
     }
 
     // Actualizar usuario
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         try {
-            $validated = $request->validate([
-                'dni' => 'string|unique:users,dni,' . $user->id,
-                'name' => 'string',
-                'email' => 'string|email|unique:users,email,' . $user->id,
-                'password' => 'nullable|string|min:5|confirmed',
-                'role' => 'string|in:ADMIN,NORMAL',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'membership_id' => 'nullable|exists:memberships,id'
-            ]);
+            $validated = $request->validated();
 
             // Manejar la subida de imagen si existe
             if ($request->hasFile('image')) {
@@ -137,9 +123,6 @@ class UserController extends Controller
             }
 
             return back()->withInput()->with('error', 'Error de base de datos al actualizar el usuario.');
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            // Los errores de validación ya son manejados por Laravel
-            return back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
             // Cualquier otro error
             Log::error('Error al actualizar usuario: ' . $e->getMessage());
@@ -200,10 +183,10 @@ class UserController extends Controller
             return redirect()->route('login');
         }
 
-        // Asegúrate de que cada reserva tenga los datos pivot
+        // Meto en cada reserva los datos pivot
         $reservations = $user->activities;
 
-        // Agregamos esto para depuración
+        // Agregamos esto para depuración que me está dando fallo. 
         foreach ($reservations as $reservation) {
             Log::info('Reservation: activity_id=' . $reservation->id . ', pivot_id=' . ($reservation->pivot->id ?? 'null'));
         }
