@@ -7,9 +7,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use App\Models\Membership;
-
 
 class ProfileController extends Controller
 {
@@ -18,14 +18,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-
-        // $selectedMembershipId = $request->query('membership_id');
-        // $memberships = Membership::orderBy('price')->get();
+        // Obtener todas las membresías para el selector
+        $memberships = Membership::orderBy('price')->get();
 
         return view('profile.edit', [
             'user' => $request->user(),
-            // 'memberships' => $memberships,
-            // 'selectedMembershipId' => $selectedMembershipId,
+            'memberships' => $memberships,
         ]);
     }
 
@@ -34,13 +32,35 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Actualizar los campos básicos
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        // Si se cambió el email, requiere nueva verificación
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Actualizar la membresía si se seleccionó una
+        if ($request->has('membership_id')) {
+            $user->membership_id = $request->membership_id;
+        }
+
+        // Procesar la imagen si se subió una nueva
+        if ($request->hasFile('image')) {
+            // Borrar la imagen anterior si existe
+            if ($user->image && Storage::disk('public')->exists($user->image)) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            // Guardar la nueva imagen
+            $path = $request->file('image')->store('users', 'public');
+            $user->image = $path;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -57,6 +77,11 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
+
+        // Eliminar la imagen del usuario si existe
+        if ($user->image && Storage::disk('public')->exists($user->image)) {
+            Storage::disk('public')->delete($user->image);
+        }
 
         $user->delete();
 

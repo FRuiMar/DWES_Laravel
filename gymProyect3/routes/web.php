@@ -50,12 +50,14 @@ Route::get('/activities/public',  [ActivityController::class, 'cards'])
 // -----   RUTAS PARA USUARIOS AUTENTICADOS. 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+
     //Si son Usuarios NORMALES.
     Route::middleware(['isUser'])->group(function () {
-
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         // Ruta específica para ver actividades como cards para usuarios normales
         Route::get('/user-activities', [ActivityController::class, 'cardsUser'])
