@@ -1,9 +1,18 @@
 <div>
+    <!-- Header con título estilizado limpio y moderno -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Membresías Disponibles</h1>
+        <h1
+            class="text-2xl font-bold text-gray-800 dark:text-gray-200 pb-2 border-b-2 border-gray-200 dark:border-gray-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2 text-blue-600 dark:text-blue-400" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+            </svg>
+            Membresías Disponibles
+        </h1>
         <div class="space-x-2">
             <a href="{{ route('memberships.create') }}"
-                class="px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                class="px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 shadow-sm">
                 <svg class="inline-block w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -15,55 +24,57 @@
         </div>
     </div>
 
-    <!-- Filtros y búsqueda -->
-    <div class="mb-4 flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div class="w-full md:w-1/3">
-            <label for="search" class="sr-only">Buscar</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
+    <!-- Filtros y búsqueda con diseño mejorado -->
+    <div class="mb-6 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div class="w-full md:w-1/3">
+                <label for="search" class="sr-only">Buscar</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <input wire:model.live="search" id="search"
+                        class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm shadow-sm"
+                        placeholder="Buscar por tipo...">
                 </div>
-                <input wire:model.live="search" id="search"
-                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Buscar por tipo...">
             </div>
-        </div>
 
-        <div>
-            <select wire:model.live="perPage"
-                class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                <option value="5">5 por página</option>
-                <option value="10">10 por página</option>
-                <option value="25">25 por página</option>
-                <option value="50">50 por página</option>
-                <option value="100">100 por página</option>
-            </select>
+            <div>
+                <select wire:model.live="perPage"
+                    class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm">
+                    <option value="5">5 por página</option>
+                    <option value="10">10 por página</option>
+                    <option value="25">25 por página</option>
+                    <option value="50">50 por página</option>
+                    <option value="100">100 por página</option>
+                </select>
+            </div>
         </div>
     </div>
 
-    <!-- Tabla de membresías -->
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+    <!-- Tabla de membresías con diseño mejorado -->
+    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-700">
                 <tr>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('id')">
                         ID
                         @if ($sortField === 'id')
                             @if ($sortDirection === 'asc')
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
                                 </svg>
                             @else
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -71,19 +82,19 @@
                         @endif
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('type')">
                         Tipo
                         @if ($sortField === 'type')
                             @if ($sortDirection === 'asc')
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
                                 </svg>
                             @else
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -91,19 +102,19 @@
                         @endif
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('price')">
                         Precio
                         @if ($sortField === 'price')
                             @if ($sortDirection === 'asc')
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
                                 </svg>
                             @else
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -111,19 +122,19 @@
                         @endif
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('duration_months')">
                         Duración
                         @if ($sortField === 'duration_months')
                             @if ($sortDirection === 'asc')
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
                                 </svg>
                             @else
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -131,46 +142,75 @@
                         @endif
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                         Usuarios
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                         Acciones
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-600">
+            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 @forelse ($memberships as $membership)
-                    <tr wire:key="membership-{{ $membership->id }}" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <tr wire:key="membership-{{ $membership->id }}"
+                        class="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900 dark:text-gray-100">{{ $membership->id }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                {{ $membership->type }}
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500 mr-1.5"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                                </svg>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                    {{ $membership->type }}
+                                </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500 dark:text-gray-300">
-                                {{ number_format($membership->price, 2) }} €
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500 mr-1.5"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div class="text-sm text-gray-600 dark:text-gray-300">
+                                    {{ number_format($membership->price, 2) }} €
+                                </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500 dark:text-gray-300">
-                                {{ $membership->duration_months }} mes(es)
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500 mr-1.5"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <div class="text-sm text-gray-600 dark:text-gray-300">
+                                    {{ $membership->duration_months }} mes(es)
+                                </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $membership->users_count > 0 ? 'bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100' }}">
-                                {{ $membership->users_count }}
-                            </span>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500 mr-1.5"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <span
+                                    class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $membership->users_count > 0 ? 'bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100' }}">
+                                    {{ $membership->users_count }}
+                                </span>
+                            </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
                                 <a href="{{ route('memberships.edit', $membership->id) }}"
-                                    class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-600 p-1 rounded-full hover:bg-yellow-100 dark:hover:bg-yellow-900">
+                                    class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-600 p-1.5 rounded-full hover:bg-yellow-100 dark:hover:bg-yellow-900/50 transition-colors">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -180,7 +220,7 @@
                                 </a>
                                 <button type="button"
                                     wire:click.prevent="confirmMembershipDeletion({{ $membership->id }})"
-                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-900">
+                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 p-1.5 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -194,8 +234,17 @@
                 @empty
                     <tr>
                         <td colspan="7"
-                            class="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-gray-300">
-                            No se encontraron membresías
+                            class="px-6 py-8 text-center text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50">
+                            <div class="flex flex-col items-center justify-center space-y-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="text-lg">No se encontraron membresías</span>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Intenta con otros criterios de
+                                    búsqueda o crea una nueva membresía</p>
+                            </div>
                         </td>
                     </tr>
                 @endforelse
@@ -203,9 +252,30 @@
         </table>
     </div>
 
-    <!-- Paginación -->
-    <div class="mt-4">
-        {{ $memberships->links() }}
+    <!-- Paginación con estilo mejorado -->
+    <div
+        class="mt-6 bg-white dark:bg-gray-800 px-4 py-3 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 flex items-center justify-between">
+        <!-- Contador de resultados -->
+        <div class="flex-1 text-sm text-gray-700 dark:text-gray-300">
+            <p class="font-medium">
+                Mostrando
+                <span
+                    class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    {{ $memberships->firstItem() ?? 0 }}-{{ $memberships->lastItem() ?? 0 }}
+                </span>
+                de
+                <span
+                    class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    {{ $memberships->total() }}
+                </span>
+                membresías
+            </p>
+        </div>
+
+        <!-- Controles de paginación -->
+        <div class="flex-1 flex justify-end">
+            {{ $memberships->links() }}
+        </div>
     </div>
 
     {{-- <!-- Mensajes de éxito/error -->
@@ -221,12 +291,12 @@
         </div>
     @endif --}}
 
-    <!-- Modal de confirmación de eliminación -->
+    <!-- Modal de confirmación de eliminación con estilo mejorado -->
     @if ($showDeleteModal)
         <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
             aria-modal="true">
-            <!-- Overlay de fondo oscuro -->
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"></div>
+            <!-- Overlay de fondo con efecto blur -->
+            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 backdrop-blur-sm"></div>
 
             <!-- Contenedor del modal centrado -->
             <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
@@ -271,7 +341,7 @@
                             Eliminar
                         </button>
                         <button wire:click="cancelMembershipDeletion" type="button"
-                            class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                             Cancelar
                         </button>
                     </div>

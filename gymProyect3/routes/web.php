@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
 
 
     //Si son Usuarios NORMALES.
-    Route::middleware(['isUser'])->group(function () {
+    Route::middleware(['isUser', 'verified'])->group(function () {
 
         // Ruta específica para ver actividades como cards para usuarios normales
         Route::get('/user-activities', [ActivityController::class, 'cardsUser'])

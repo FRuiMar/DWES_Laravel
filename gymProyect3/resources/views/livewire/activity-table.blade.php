@@ -1,10 +1,17 @@
 <div>
+    <!-- Header con título estilizado limpio y moderno -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Actividades Registradas</h1>
+        <h1
+            class="text-2xl font-bold text-gray-800 dark:text-gray-200 pb-2 border-b-2 border-gray-200 dark:border-gray-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2 text-blue-600 dark:text-blue-400" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Actividades Registradas
+        </h1>
         <div class="space-x-2">
-            <!-- Eliminamos el botón de tarjetas que causa el error -->
             <a href="{{ route('activities.create') }}"
-                class="px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                class="px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 shadow-sm">
                 <svg class="inline-block w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -16,72 +23,78 @@
         </div>
     </div>
 
-    <!-- Filtros y búsqueda -->
-    <div class="mb-4 flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div class="w-full md:w-1/3">
-            <label for="search" class="sr-only">Buscar</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
+    <!-- Panel de filtros mejorado visualmente -->
+    <div class="mb-6 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <!-- Buscador con estilo mejorado -->
+            <div class="w-full md:w-1/3">
+                <label for="search" class="sr-only">Buscar</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <input wire:model.live="search" id="search"
+                        class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white dark:bg-gray-700 dark:text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm shadow-sm"
+                        placeholder="Buscar por nombre o horario...">
                 </div>
-                <input wire:model.live="search" id="search"
-                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Buscar por nombre o horario...">
-            </div>
-        </div>
-
-        <div class="flex gap-4">
-            <div>
-                <select wire:model.live="filterTrainer"
-                    class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    <option value="">Todos los entrenadores</option>
-                    @foreach ($trainers as $trainer)
-                        <option value="{{ $trainer->id }}">{{ $trainer->first_name }} {{ $trainer->last_name }}
-                        </option>
-                    @endforeach
-                </select>
             </div>
 
-            <div>
-                <select wire:model.live="perPage"
-                    class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    <option value="5">5 por página</option>
-                    <option value="10">10 por página</option>
-                    <option value="25">25 por página</option>
-                    <option value="50">50 por página</option>
-                    <option value="100">100 por página</option>
-                </select>
+            <div class="flex gap-4 w-full md:w-auto">
+                <!-- Selector de entrenador estilizado -->
+                <div class="w-full md:w-auto">
+                    <select wire:model.live="filterTrainer"
+                        class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 shadow-sm">
+                        <option value="">Todos los entrenadores</option>
+                        @foreach ($trainers as $trainer)
+                            <option value="{{ $trainer->id }}">{{ $trainer->first_name }} {{ $trainer->last_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Selector de elementos por página estilizado -->
+                <div class="w-full md:w-auto">
+                    <select wire:model.live="perPage"
+                        class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 shadow-sm">
+                        <option value="5">5 por página</option>
+                        <option value="10">10 por página</option>
+                        <option value="25">25 por página</option>
+                        <option value="50">50 por página</option>
+                        <option value="100">100 por página</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Tabla de actividades -->
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+    <!-- Tabla de actividades con estilo mejorado y limpio -->
+    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <!-- Cabecera de tabla mejorada -->
             <thead class="bg-gray-50 dark:bg-gray-700">
                 <tr>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                         Imagen
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('name')">
                         Nombre
                         @if ($sortField === 'name')
                             @if ($sortDirection === 'asc')
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
                                 </svg>
                             @else
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -89,19 +102,19 @@
                         @endif
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('schedule')">
                         Horario
                         @if ($sortField === 'schedule')
                             @if ($sortDirection === 'asc')
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
                                 </svg>
                             @else
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -109,19 +122,19 @@
                         @endif
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('max_capacity')">
                         Capacidad
                         @if ($sortField === 'max_capacity')
                             @if ($sortDirection === 'asc')
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
                                 </svg>
                             @else
-                                <svg class="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline-block w-4 h-4 ml-1 text-blue-600" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -129,33 +142,41 @@
                         @endif
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                         Entrenador
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                         Acciones
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-600">
+
+            <!-- Cuerpo de tabla con animaciones y hover mejorados -->
+            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 @forelse ($activities as $activity)
-                    <tr wire:key="activity-{{ $activity->id }}" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <tr wire:key="activity-{{ $activity->id }}"
+                        class="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="h-10 w-10 flex-shrink-0">
-                                    @if ($activity->image)
-                                        <img class="h-10 w-10 rounded object-cover"
+                            <div class="flex items-center justify-center">
+                                @if ($activity->image)
+                                    <div
+                                        class="h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg border-2 border-gray-200 dark:border-gray-600 shadow-md transition-transform duration-300 hover:scale-110">
+                                        <img class="h-full w-full object-cover"
                                             src="{{ asset('storage/' . $activity->image) }}"
                                             alt="{{ $activity->name }}">
-                                    @else
-                                        <div
-                                            class="h-10 w-10 rounded bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
-                                            <span
-                                                class="text-gray-500 dark:text-gray-400 font-bold">{{ substr($activity->name, 0, 1) }}</span>
-                                        </div>
-                                    @endif
-                                </div>
+                                    </div>
+                                @else
+                                    <div
+                                        class="h-14 w-14 rounded-full bg-gray-100 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center shadow-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-6 w-6 text-gray-400 dark:text-gray-500" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                @endif
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -164,29 +185,56 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                            <div class="text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500 mr-1"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                                 {{ $activity->schedule }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500 dark:text-gray-400">
-                                {{ $activity->max_capacity }}
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500 mr-1"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span
+                                    class="text-sm text-gray-600 dark:text-gray-300">{{ $activity->max_capacity }}</span>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                            <div class="flex items-center">
                                 @if ($activity->trainer)
-                                    {{ $activity->trainer->first_name }}
-                                    {{ $activity->trainer->last_name }}
+                                    <span
+                                        class="px-2 py-1 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        {{ $activity->trainer->first_name }}
+                                        {{ $activity->trainer->last_name }}
+                                    </span>
                                 @else
-                                    <span class="text-gray-400 dark:text-gray-500">Sin asignar</span>
+                                    <span
+                                        class="px-2 py-1 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Sin asignar
+                                    </span>
                                 @endif
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex space-x-2">
                                 <a href="{{ route('activities.show', $activity->id) }}"
-                                    class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 p-1 rounded-full hover:bg-indigo-100 dark:hover:bg-indigo-900">
+                                    class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 p-1.5 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
@@ -196,7 +244,7 @@
                                     </svg>
                                 </a>
                                 <a href="{{ route('activities.edit', $activity->id) }}"
-                                    class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-600 p-1 rounded-full hover:bg-yellow-100 dark:hover:bg-yellow-900">
+                                    class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 p-1.5 rounded-full hover:bg-yellow-100 dark:hover:bg-yellow-900/50 transition-colors">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -206,7 +254,7 @@
                                 </a>
                                 <button type="button"
                                     wire:click.prevent="confirmActivityDeletion({{ $activity->id }})"
-                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-900">
+                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 p-1.5 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -220,8 +268,17 @@
                 @empty
                     <tr>
                         <td colspan="6"
-                            class="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-gray-300">
-                            No se encontraron actividades
+                            class="px-6 py-8 text-center text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50">
+                            <div class="flex flex-col items-center justify-center space-y-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="text-lg">No se encontraron actividades</span>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Intenta con otros criterios de
+                                    búsqueda o crea una nueva actividad</p>
+                            </div>
                         </td>
                     </tr>
                 @endforelse
@@ -229,38 +286,46 @@
         </table>
     </div>
 
-    <!-- Paginación -->
-    <div class="mt-4">
-        {{ $activities->links() }}
+    <!-- Paginación con estilo mejorado -->
+    <div
+        class="mt-6 bg-white dark:bg-gray-800 px-4 py-3 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 flex items-center justify-between">
+        <!-- Contador de resultados -->
+        <div class="flex-1 text-sm text-gray-700 dark:text-gray-300">
+            <p class="font-medium">
+                Mostrando
+                <span
+                    class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    {{ $activities->firstItem() ?? 0 }}-{{ $activities->lastItem() ?? 0 }}
+                </span>
+                de
+                <span
+                    class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    {{ $activities->total() }}
+                </span>
+                actividades
+            </p>
+        </div>
+
+        <!-- Controles de paginación -->
+        <div class="flex-1 flex justify-end">
+            {{ $activities->links() }}
+        </div>
     </div>
 
-    {{-- <!-- Mensajes de éxito/error -->
-    @if (session()->has('success'))
-        <div class="mt-4 px-4 py-3 bg-green-100 text-green-900 border-l-4 border-green-500 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if (session()->has('error'))
-        <div class="mt-4 px-4 py-3 bg-red-100 text-red-900 border-l-4 border-red-500 rounded">
-            {{ session('error') }}
-        </div>
-    @endif --}}
-
-    <!-- Modal de confirmación de eliminación -->
+    <!-- Modal de confirmación de eliminación con estilo mejorado -->
     @if ($showDeleteModal)
         <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
             aria-modal="true">
-            <!-- Overlay de fondo oscuro -->
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"></div>
+            <!-- Overlay de fondo con efecto blur -->
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
 
-            <!-- Contenedor del modal centrado -->
+            <!-- Modal container -->
             <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-                <!-- Contenido del modal -->
+                <!-- Contenido del modal con efecto de aparición -->
                 <div
-                    class="relative inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-800 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    class="relative inline-block overflow-hidden text-left align-bottom bg-white rounded-lg shadow-xl dark:bg-gray-800 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full transform transition-all sm:scale-100 opacity-100">
                     <div class="px-4 pt-5 pb-4 bg-white dark:bg-gray-800 sm:p-6 sm:pb-4">
                         <div class="sm:flex sm:items-start">
                             <div
@@ -291,7 +356,7 @@
                             Eliminar
                         </button>
                         <button wire:click="cancelActivityDeletion" type="button"
-                            class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                             Cancelar
                         </button>
                     </div>
